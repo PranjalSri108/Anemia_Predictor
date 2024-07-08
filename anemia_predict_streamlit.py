@@ -1,13 +1,13 @@
-import streamlit as st
+ import streamlit as st
 import pandas as pd
 import numpy as np
-from joblib import load
+import joblib
 
 # Load the saved model and scaler
 @st.cache_resource
 def load_model():
-    model = load('anemia_predictor.stoplib')
-    scaler = load('scaler.joblib')
+    model = joblib.load('anemia_predictor.stoplib')
+    scaler = joblib.load('scaler.joblib')
     return model, scaler
 
 model, scaler = load_model()
@@ -17,15 +17,21 @@ st.title('Anemia Detection App')
 
 st.write("""
 This app predicts whether a person is anemic based on their blood parameters.
-Please enter the required information below.
+Please adjust the sliders below to input the required information.
 """)
 
-# Create input fields
+# Create two columns
+col1, col2 = st.columns(2)
+
+# Create input fields with sliders
+with col1:
+    red_pixel = st.slider('% Red Pixel', min_value=0.0, max_value=100.0, value=50.0, step=0.1)
+    green_pixel = st.slider('% Green Pixel', min_value=0.0, max_value=100.0, value=50.0, step=0.1)
+
+with col2:
+    blue_pixel = st.slider('% Blue Pixel', min_value=0.0, max_value=100.0, value=50.0, step=0.1)
+    hb = st.slider('Hemoglobin (Hb)', min_value=0.0, max_value=20.0, value=10.0, step=0.1)
 sex = st.selectbox('Sex', options=['M', 'F'])
-red_pixel = st.number_input('% Red Pixel', min_value=0.0, max_value=100.0, value=50.0)
-green_pixel = st.number_input('% Green Pixel', min_value=0.0, max_value=100.0, value=50.0)
-blue_pixel = st.number_input('% Blue Pixel', min_value=0.0, max_value=100.0, value=50.0)
-hb = st.number_input('Hemoglobin (Hb)', min_value=0.0, max_value=20.0, value=10.0)
 
 # Create a prediction button
 if st.button('Predict'):
