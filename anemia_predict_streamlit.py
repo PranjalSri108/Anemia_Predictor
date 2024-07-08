@@ -6,7 +6,7 @@ import joblib
 # Load the saved model and scaler
 @st.cache_resource
 def load_model():
-    model = joblib.load('anemia_predictor.joplib')
+    model = joblib.load('anemia_predictor.joblib')
     scaler = joblib.load('scaler.joblib')
     return model, scaler
 
