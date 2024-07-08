@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, classification_report
 
 FOREST_NO = 100
 CSV_PATH = '/home/robosobo/ML_code/Datasets/anemia_data/anemia.csv'
-MODEL_FILENAME = 'anemia_predictor.stoplib'
+MODEL_FILENAME = 'anemia_predictor.joblib'
 SCALER_FILENAME = 'scaler.joblib'
 
 data_frame = pd.read_csv(CSV_PATH)
